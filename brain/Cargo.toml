@@ -1,0 +1,9 @@
+[package]
+name = "brain"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+
+[package.metadata.cross.build]
+default-target = "aarch64-unknown-linux-gnu"
