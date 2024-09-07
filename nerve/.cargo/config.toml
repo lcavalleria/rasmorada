@@ -21,4 +21,4 @@ target = "thumbv6m-none-eabi"
 DEFMT_LOG = "debug"
 
 [target.thumbv6m-none-eabi]
-runner = "elf2uf2-rs -d"
+runner = "elf2uf2-rs"
