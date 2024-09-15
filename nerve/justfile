@@ -1,3 +1,9 @@
+set dotenv-filename := "device.env"
+set dotenv-required
+
 @flash:
+  @echo "Building the release"
   cargo run --release
-  ./flash.sh
+  @echo "Release built. Copying $UF2_FILE to $MOUNT_POINT..."
+  cp $UF2_FILE $MOUNT_POINT/
+  @echo "Successfully flashed"
