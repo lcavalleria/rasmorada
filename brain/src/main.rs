@@ -8,9 +8,9 @@ fn main() {
         .expect("Failed to initialize UART");
 
     let gpio = Gpio::new().expect("Failed to initialize GPIO");
-    let _direction_pin = gpio.get(0).expect("Failed to get Gpio0").into_output_low();
+    let _direction_pin = gpio.get(17).expect("Failed to get Gpio0").into_output_low();
 
-    let mut buffer = [0u8; 8];
+    let mut buffer = [0u8; 32];
     loop {
         match uart.read(&mut buffer) {
             Ok(bytes_read) => {
