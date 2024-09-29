@@ -12,6 +12,7 @@ use waveshare_rp2040_zero::{
     entry,
     hal::{
         clocks::{init_clocks_and_plls, Clock},
+        fugit::HertzU32,
         gpio::{bank0::Gpio2, FunctionSio, Pin, PullDown, SioOutput},
         pac,
         pio::PIOExt,
@@ -69,7 +70,15 @@ fn main() -> ! {
     let _uart_tx: Gp0Uart0Tx = pins.gp0.into_function().into_pull_type();
     let _uart_rx: Gp1Uart0Rx = pins.gp1.into_function().into_pull_type();
     let mut uart = UartPeripheral::new(pac.UART0, (_uart_tx, _uart_rx), &mut pac.RESETS)
-        .enable(UartConfig::default(), clocks.peripheral_clock.freq())
+        .enable(
+            UartConfig::new(
+                HertzU32::Hz(9600),
+                waveshare_rp2040_zero::hal::uart::DataBits::Eight,
+                None,
+                waveshare_rp2040_zero::hal::uart::StopBits::One,
+            ),
+            clocks.peripheral_clock.freq(),
+        )
         .unwrap();
     let mut direction_pin: Pin<Gpio2, FunctionSio<SioOutput>, PullDown> = pins
         .gp2
