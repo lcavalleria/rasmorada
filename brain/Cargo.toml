@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 rppal = "0.19.0"
+tokio = { version = "1.40.0", features = ["full"] }
 
 [package.metadata.cross.build]
 default-target = "aarch64-unknown-linux-gnu"

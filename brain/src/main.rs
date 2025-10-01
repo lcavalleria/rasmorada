@@ -1,18 +1,17 @@
+mod uart;
+
 use core::str;
-use rppal::gpio::Gpio;
-use rppal::uart::{Parity, Uart};
+use uart::BrainUart;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     println!("Started Brain");
-    let mut uart = Uart::with_path("/dev/ttyAMA0", 9600, Parity::None, 8, 1)
-        .expect("Failed to initialize UART");
-
-    let gpio = Gpio::new().expect("Failed to initialize GPIO");
-    let _direction_pin = gpio.get(17).expect("Failed to get Gpio0").into_output_low();
-
+    // init
+    let mut uart: BrainUart = BrainUart::uart_init();
     let mut buffer = [0u8; 32];
-    loop {
-        match uart.read(&mut buffer) {
+
+    let read_uart = loop {
+        match uart.read() {
             Ok(bytes_read) => {
                 if bytes_read > 0 {
                     println!("Read {} bytes", bytes_read);
@@ -33,5 +32,5 @@ fn main() {
                 break;
             }
         }
-    }
+    };
 }
